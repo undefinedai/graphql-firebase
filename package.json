@@ -29,6 +29,5 @@
     "@types/pug": "^2.0.4",
     "tsc-watch": "^4.2.9",
     "typescript": "^3.8.0"
-  },
-  "private": true
+  }
 }
