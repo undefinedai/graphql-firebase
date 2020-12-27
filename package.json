@@ -20,7 +20,6 @@
     "express-graphql": "^0.12.0",
     "graphql": "^15.4.0",
     "graphql-tools": "^7.0.2",
-    "joi": "^17.3.0",
     "pug": "^3.0.0"
   },
   "devDependencies": {
