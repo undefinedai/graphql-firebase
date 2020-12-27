@@ -2,11 +2,13 @@
   "name": "@undefinedai/graphql-firebase",
   "version": "0.0.1",
   "description": "A graphql server that runs on Firebase Functions and Firebase Hosting. Provides a web interface with GraphQL Voyager and playgrounds, mock queries for testing, and lots of options for customizing everything to your needs.",
+  "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
+  "repository": "https://github.com/undefinedai/graphql-firebase",
   "scripts": {
     "build": "tsc; npm run copy:static",
     "copy:static": "rsync -r --include '*/' --include '*.pug' --include '.gitkeep' --exclude='*' --prune-empty-dirs 'src/' 'lib/'"
