@@ -1,0 +1,18 @@
+- var errorMessage
+- var errorTitle
+- var errorCode
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="robots" content="noindex,nofollow,noarchive")
+    title GraphQL Firebase Error
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous")
+  body(class="align-items-center bg-light d-flex justify-content-center p-3 vh-100 vw-100")
+    div(class="alert alert-warning" role="alert" style="max-width: 420px;")
+      h4(class="alert-heading") #{errorTitle}
+      p !{errorMessage}
+      p(class="mb-0")
+        small
+          code HTTP Error Status #{errorCode}

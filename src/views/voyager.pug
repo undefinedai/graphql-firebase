@@ -1,0 +1,48 @@
+- var credentials
+- var endpoint
+- var headers
+- var introspectionQuery
+- var pageTitle
+doctype html
+html(lang="en")
+  head
+    block head
+      meta(charset="utf-8")
+      meta(name="viewport" content="width=device-width, initial-scale=1")
+      meta(name="robots" content="noindex,nofollow,noarchive")
+      title=pageTitle
+      style(type="text/css").
+        body { height: 100vh; overflow: hidden; margin: 0; width: 100vw; }
+        #voyager { height: 100vh; }
+        #loading { align-items: center; background-color: #f8f9fa; display: flex; height: 100vh; justify-content: center; width: 100vw; }
+        #loading span { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; }
+      link(href="https://unpkg.com/graphql-voyager@1.0.0-rc.31/dist/voyager.css" rel="stylesheet" type="text/css" crossorigin)
+  body
+    block body
+      div(id="voyager")
+        div(id="loading")
+          span Loading GraphQL Voyager...
+    block scripts
+      script(src="https://unpkg.com/react@^16/umd/react.production.min.js" crossorigin)
+      script(src="https://unpkg.com/react-dom@^16/umd/react-dom.production.min.js" crossorigin)
+      script(src="https://unpkg.com/graphql-voyager@1.0.0-rc.31/dist/voyager.min.js" crossorigin)
+      script.
+        GraphQLVoyager.init(document.getElementById('voyager'), {
+          introspection: introspectionProvider,
+        });
+        function introspectionProvider() {
+          return fetch("/#{endpoint}", {
+            method: "post",
+            headers: !{headers},
+            credentials: "#{credentials}",
+            body: JSON.stringify({ query: `#{introspectionQuery}` }),
+          }).then(function (response) {
+            return response.text();
+          }).then(function (responseBody) {
+            try {
+              return JSON.parse(responseBody);
+            } catch (error) {
+              return responseBody;
+            }
+          });
+        };
