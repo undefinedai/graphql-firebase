@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function InstallationPage() {
   return (
     <>
@@ -32,6 +34,47 @@ export default function InstallationPage() {
                 yarn add @undefinedai/graphql-firebase
               </code>
             </pre>
+            <h2>Initializing Your GraphQL Server</h2>
+            <p>
+              Your GraphQL server is ready to go - you just need to add it to a
+              Firebase Function and optionally connect it to Firebase Hosting if
+              you want a custom url.
+            </p>
+            <p>
+              You can use whatever function name you want - for our examples, we
+              use <code>graphql</code> but that&#8217;s not a requirement. In
+              your Firebase Functions code, add the following.
+            </p>
+            <pre className="bg-light p-3 pre-scrollable">
+              <code>
+                <span className="text-muted">
+                  // We use ES6+ in our projects, but you can adjust this to use
+                  commonjs
+                </span>
+                <br />
+                {`import * as functions from "firebase-functions"`}
+                <br />
+                <br />
+                {`import { GraphQLFirebase } from "@undefinedai/graphql-firebase"`}
+                <br />
+                <br />
+                {`export const graphql = functions.https.onRequest(GraphQLFirebase())`}
+              </code>
+            </pre>
+            <p>
+              The above code creates a Firebase HTTP Function. If you fire up
+              your emulator or deploy now, you&#8217;ll have a fully functioning
+              GraphQL server with a MockQL server, playgrounds for each, and a
+              GraphQL Voyager to visualize your graph.
+            </p>
+            <p>
+              Of course, it doesn&#8217;t have any of <em>your</em> data or
+              functions yet, so let&#8217;s look at{" "}
+              <Link href="/options">
+                <a>how you can customize your GraphQL Firebase</a>
+              </Link>
+              .
+            </p>
           </div>
         </div>
       </main>

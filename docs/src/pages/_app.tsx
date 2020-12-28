@@ -20,8 +20,10 @@ export default function GraphQLFirebaseDocs({
         <Navbar.Toggle aria-controls="navbar" />
         <Navbar.Collapse id="navbar">
           <Nav className="mr-auto">
+            <Nav.Link href="/features">Features</Nav.Link>
             <Nav.Link href="/installation">Getting Started</Nav.Link>
             <Nav.Link href="/config">Options</Nav.Link>
+            <Nav.Link href="/hosting">Custom URL</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link href="https://github.com/undefinedai/graphql-firebase">
