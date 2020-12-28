@@ -1,0 +1,44 @@
+{
+  "name": "@undefinedai/graphql-firebase",
+  "version": "0.0.1",
+  "description": "A graphql server that runs on Firebase Functions and Firebase Hosting. Provides a web interface with GraphQL Voyager and playgrounds, mock queries for testing, and lots of options for customizing everything to your needs.",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/undefinedai/graphql-firebase"
+  },
+  "bugs": {
+    "url": "https://github.com/undefinedai/graphql-firebase/issues"
+  },
+  "scripts": {
+    "build": "tsc; npm run copy:static",
+    "copy:static": "rsync -r --include '*/' --include '*.pug' --include '.gitkeep' --exclude='*' --prune-empty-dirs 'src/' 'lib/'"
+  },
+  "engines": {
+    "node": "10"
+  },
+  "dependencies": {
+    "casual": "^1.6.2",
+    "cors": "^2.8.5",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.4.0",
+    "graphql-tools": "^7.0.2",
+    "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.9",
+    "@types/express": "^4.17.9",
+    "@types/node": "^14.14.16",
+    "@types/pug": "^2.0.4",
+    "tsc-watch": "^4.2.9",
+    "typescript": "^3.8.0"
+  },
+  "peerDependencies": {
+    "express": "^4.15.0"
+  }
+}

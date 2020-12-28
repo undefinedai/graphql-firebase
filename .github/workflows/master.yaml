@@ -1,19 +1,27 @@
-name: Publish to NPM Registry
+name: Publish Release
 on:
   push:
     branches: [master]
   workflow_dispatch:
 jobs:
-  build:
+  module:
+    name: Build and Publish to NPM
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Check out repo
+        uses: actions/checkout@v2
+      - name: Build Node environment
+        uses: actions/setup-node@v1
         with:
           node-version: "12.x"
           registry-url: "https://registry.npmjs.org"
-      - run: npm ci
-      - run: npm run build
-      - run: npm publish --access public
+      - name: Switch to module directory
+        run: cd module
+      - name: Install node modules
+        run: npm ci
+      - name: Build module for release
+        run: npm run build
+      - name: Publish to NPM registry
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
