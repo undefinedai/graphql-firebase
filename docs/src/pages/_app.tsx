@@ -23,7 +23,7 @@ export default function GraphQLFirebaseDocs({
             <Nav.Link href="/features">Features</Nav.Link>
             <Nav.Link href="/installation">Getting Started</Nav.Link>
             <Nav.Link href="/options">Options</Nav.Link>
-            <Nav.Link href="/hosting">Custom URL</Nav.Link>
+            <Nav.Link href="/firebase-hosting">Custom URL</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link href="https://github.com/undefinedai/graphql-firebase">

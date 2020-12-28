@@ -154,6 +154,43 @@ export default function OptionsPage() {
                   </small>
                 </a>
               </Link>
+              <Link href="/options/additional-routes">
+                <a className="list-group-item list-group-item-action">
+                  <h5 className="mb-1">
+                    Add a login page or additional routes to my site
+                  </h5>
+                  <small>
+                    <code>additionalRoutes</code>
+                  </small>
+                </a>
+              </Link>
+              <Link href="/options/four-oh-fours">
+                <a className="list-group-item list-group-item-action">
+                  <h5 className="mb-1">Handle 404 errors</h5>
+                  <small>
+                    <code>fourOhFourTheRest</code>
+                  </small>
+                </a>
+              </Link>
+              <Link href="/options/voyager-introspection">
+                <a className="list-group-item list-group-item-action">
+                  <h5 className="mb-1">
+                    Customizing Voyager&#8217;s introspection query
+                  </h5>
+                  <small>
+                    <code>introspectionQuery</code>,{" "}
+                    <code>voyagerCredentials</code>
+                  </small>
+                </a>
+              </Link>
+              <Link href="/firebase-hosting">
+                <a className="list-group-item list-group-item-action">
+                  <h5 className="mb-1">Add a custom url to my function</h5>
+                  <small>
+                    <code>firebase.json</code>
+                  </small>
+                </a>
+              </Link>
             </div>
           </div>
         </div>
