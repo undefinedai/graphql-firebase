@@ -22,7 +22,7 @@ export default function OptionsMocksSchemaPage() {
           <div className="col-lg-8 offset-lg-2">
             <p>
               GraphQL servers work off two main concepts - <code>typeDefs</code>{" "}
-              and <code>resolvers</code>. Put those together, and you have a
+              and <code>resolvers</code>. Put those together, and you have a{" "}
               <code>schema</code>. Pass your <code>schema</code> to GraphQL
               Firebase, and you have a custom GraphQL server.
             </p>
@@ -42,15 +42,16 @@ export default function OptionsMocksSchemaPage() {
             <pre className="bg-light p-3">
               <code>
                 <span className="text-muted">
-                  // We use ES6+ in our projects, but you can adjust this to use
-                  commonjs
+                  // We use ES6+ and typescript in our projects,
+                  <br />
+                  // but you can adjust this to use commonjs
                 </span>
                 <br />
                 <br />
                 {`import * as functions from "firebase-functions"
 
 import { GraphQLFirebase, makeExecutableSchema } from "@undefinedai/graphql-firebase"
-                
+
 const typeDefs = \`
   type Post {
     id: ID!

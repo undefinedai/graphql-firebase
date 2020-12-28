@@ -48,9 +48,11 @@ export default function InstallationPage() {
             <pre className="bg-light p-3 pre-scrollable">
               <code>
                 <span className="text-muted">
-                  // We use ES6+ in our projects, but you can adjust this to use
-                  commonjs
+                  // We use ES6+ and typescript in our projects,
+                  <br />
+                  // but you can adjust this to use commonjs
                 </span>
+                <br />
                 <br />
                 {`import * as functions from "firebase-functions"`}
                 <br />

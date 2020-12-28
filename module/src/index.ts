@@ -23,24 +23,27 @@ export type GraphQLFirebaseHeaders = {
 export interface GraphQLFirebaseConfig {
   additionalRoutes?: Router
   dashboardEndpoint?: string
+  dashboardMiddleware?: RequestHandler | RequestHandler[]
   dashboardTemplate?: string
   disableDashboard?: boolean
   disableMockQL?: boolean
   disablePlaygrounds?: boolean
   disableVoyager?: boolean
+  fourOhFourMiddleware?: RequestHandler | RequestHandler[]
   fourOhFourTheRest?: boolean
   globalMiddleware?: RequestHandler | RequestHandler[]
   graphEndpoint?: string
   graphMiddleware?: RequestHandler | RequestHandler[]
+  graphPlaygroundEndpoint?: string
   graphPlaygroundHeaders?: (req: Request) => GraphQLFirebaseHeaders
   graphPlaygroundMiddleware?: RequestHandler | RequestHandler[]
   introspectionQuery?: string
   mockEndpoint?: string
   mockMiddleware?: RequestHandler | RequestHandler[]
+  mockPlaygroundEndpoint?: string
   mockPlaygroundHeaders?: (req: Request) => GraphQLFirebaseHeaders
   mockPlaygroundMiddleware?: RequestHandler | RequestHandler[]
   mocks?: IMocks
-  playgroundPrefix?: string
   playgroundTemplate?: string
   preserveResolvers?: boolean
   schema?: GraphQLSchema
@@ -77,24 +80,27 @@ export interface GraphQLFirebaseConfig {
 export function GraphQLFirebase({
   additionalRoutes,
   dashboardEndpoint = "",
+  dashboardMiddleware = [],
   dashboardTemplate,
   disableDashboard = false,
   disableMockQL = false,
   disablePlaygrounds = false,
   disableVoyager = false,
+  fourOhFourMiddleware = [],
   fourOhFourTheRest = true,
   globalMiddleware,
   graphEndpoint = "graphql",
   graphMiddleware = [],
+  graphPlaygroundEndpoint = "playground/graphql",
   graphPlaygroundHeaders = () => ({}),
   graphPlaygroundMiddleware = [],
   introspectionQuery = defaultIntrospectionQuery,
   mockEndpoint = "mockql",
   mockMiddleware = [],
+  mockPlaygroundEndpoint = "playground/mockql",
   mockPlaygroundHeaders = () => ({}),
   mockPlaygroundMiddleware = [],
   mocks: providedMocks,
-  playgroundPrefix = "playground",
   playgroundTemplate,
   preserveResolvers = false,
   schema: providedSchema,
@@ -122,8 +128,15 @@ export function GraphQLFirebase({
 
   const finalDashboardEndpoint = dashboardEndpoint.replace(/^\/+|\/+$/g, "")
   const finalGraphEndpoint = graphEndpoint.replace(/^\/+|\/+$/g, "")
+  const finalGraphPlaygroundEndpoint = graphPlaygroundEndpoint.replace(
+    /^\/+|\/+$/g,
+    ""
+  )
   const finalMockEndpoint = mockEndpoint.replace(/^\/+|\/+$/g, "")
-  const finalPlaygroundPrefix = playgroundPrefix.replace(/^\/+|\/+$/g, "")
+  const finalMockPlaygroundEndpoint = mockPlaygroundEndpoint.replace(
+    /^\/+|\/+$/g,
+    ""
+  )
   const finalVoyagerEndpoint = voyagerEndpoint.replace(/^\/+|\/+$/g, "")
 
   app.use(
@@ -134,8 +147,9 @@ export function GraphQLFirebase({
       disablePlaygrounds: disablePlaygrounds,
       disableVoyager: disableVoyager,
       graphEndpoint: finalGraphEndpoint,
+      graphPlaygroundEndpoint: finalGraphPlaygroundEndpoint,
       mockEndpoint: finalMockEndpoint,
-      playgroundPrefix: finalPlaygroundPrefix,
+      mockPlaygroundEndpoint: finalMockPlaygroundEndpoint,
       voyagerEndpoint: finalVoyagerEndpoint,
     })
   )
@@ -164,7 +178,7 @@ export function GraphQLFirebase({
   }
   if (disablePlaygrounds === false) {
     app.get(
-      `/${finalPlaygroundPrefix}/${finalGraphEndpoint}`,
+      `/${finalGraphPlaygroundEndpoint}`,
       graphPlaygroundMiddleware,
       function (req: Request, res: Response) {
         const headers = graphPlaygroundHeaders(req)
@@ -177,7 +191,7 @@ export function GraphQLFirebase({
     )
     if (disableMockQL === false) {
       app.get(
-        `/${finalPlaygroundPrefix}/${finalMockEndpoint}`,
+        `/${finalMockPlaygroundEndpoint}`,
         mockPlaygroundMiddleware,
         function (req: Request, res: Response) {
           const headers = mockPlaygroundHeaders(req)
@@ -228,10 +242,15 @@ export function GraphQLFirebase({
   ) {
     app.get(
       `/${finalDashboardEndpoint}`,
-      function (req: Request, res: Response) {
+      dashboardMiddleware,
+      function (_: Request, res: Response) {
         res.render(dashboardTemplate || join(__dirname, "views/dashboard"), {
           disablePlaygrounds,
+          disableMockQL,
           disableVoyager,
+          graphPlaygroundEndpoint: finalGraphPlaygroundEndpoint,
+          mockPlaygroundEndpoint: finalMockPlaygroundEndpoint,
+          voyagerEndpoint: finalVoyagerEndpoint,
         })
       }
     )
@@ -242,7 +261,7 @@ export function GraphQLFirebase({
   }
 
   if (fourOhFourTheRest) {
-    app.all("*", function (_: Request, res: Response) {
+    app.all("*", fourOhFourMiddleware, function (_: Request, res: Response) {
       res.status(404).render(join(__dirname, "views/error"), {
         errorCode: res.statusCode,
         errorTitle: "Resource Not Found",

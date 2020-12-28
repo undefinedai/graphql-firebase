@@ -36,24 +36,27 @@ export default function OptionsPage() {
                 {`{
   additionalRoutes?: Router
   dashboardEndpoint?: string
+  dashboardMiddleware?: RequestHandler | RequestHandler[]
   dashboardTemplate?: string
   disableDashboard?: boolean
   disableMockQL?: boolean
   disablePlaygrounds?: boolean
   disableVoyager?: boolean
+  fourOhFourMiddleware?: RequestHandler | RequestHandler[]
   fourOhFourTheRest?: boolean
   globalMiddleware?: RequestHandler | RequestHandler[]
   graphEndpoint?: string
   graphMiddleware?: RequestHandler | RequestHandler[]
+  graphPlaygroundEndpoint?: string
   graphPlaygroundHeaders?: (req: Request) => GraphQLFirebaseHeaders
   graphPlaygroundMiddleware?: RequestHandler | RequestHandler[]
   introspectionQuery?: string
   mockEndpoint?: string
   mockMiddleware?: RequestHandler | RequestHandler[]
+  mockPlaygroundEndpoint?: string
   mockPlaygroundHeaders?: (req: Request) => GraphQLFirebaseHeaders
   mockPlaygroundMiddleware?: RequestHandler | RequestHandler[]
   mocks?: IMocks
-  playgroundPrefix?: string
   playgroundTemplate?: string
   preserveResolvers?: boolean
   schema?: GraphQLSchema
@@ -84,7 +87,7 @@ export default function OptionsPage() {
               <Link href="/options/mocks-schema">
                 <a className="list-group-item list-group-item-action">
                   <h5 className="mb-1">
-                    Add my own schema and mocks to GraphQL Firebase?
+                    Add my own schema and mocks to GraphQL Firebase
                   </h5>
                   <small>
                     <code>mocks</code>, <code>preserveResolvers</code>,{" "}
@@ -92,15 +95,62 @@ export default function OptionsPage() {
                   </small>
                 </a>
               </Link>
-              <Link href="/options/middlware">
+              <Link href="/options/middleware">
                 <a className="list-group-item list-group-item-action">
-                  <h5 className="mb-1">Add logging or security middleware?</h5>
+                  <h5 className="mb-1">
+                    Add logging or security (or other middleware) to requests
+                  </h5>
                   <small>
+                    <code>dashboardMiddleware</code>,{" "}
+                    <code>fourOhFourMiddleware</code>,{" "}
                     <code>globalMiddleware</code>, <code>graphMiddleware</code>,{" "}
                     <code>graphPlaygroundMiddleware</code>,{" "}
                     <code>mockMiddleware</code>,{" "}
                     <code>mockPlaygroundMiddleware</code>,{" "}
                     <code>voyagerMiddleware</code>
+                  </small>
+                </a>
+              </Link>
+              <Link href="/options/headers">
+                <a className="list-group-item list-group-item-action">
+                  <h5 className="mb-1">
+                    Pass request headers to playgrounds and voyager
+                  </h5>
+                  <small>
+                    <code>graphPlaygroundHeaders</code>,{" "}
+                    <code>mockPlaygroundHeaders</code>,{" "}
+                    <code>voyagerHeaders</code>
+                  </small>
+                </a>
+              </Link>
+              <Link href="/options/disable-features">
+                <a className="list-group-item list-group-item-action">
+                  <h5 className="mb-1">Disable features I don&#8217;t want</h5>
+                  <small>
+                    <code>disableDashboard</code>, <code>disableMockQL</code>,{" "}
+                    <code>disablePlaygrounds</code>, <code>disableVoyager</code>
+                  </small>
+                </a>
+              </Link>
+              <Link href="/options/customize-paths">
+                <a className="list-group-item list-group-item-action">
+                  <h5 className="mb-1">Customize the paths on my server</h5>
+                  <small>
+                    <code>dashboardEndpoint</code>, <code>graphEndpoint</code>,{" "}
+                    <code>graphPlaygroundEndpoint</code>{" "}
+                    <code>mockEndpoint</code>,{" "}
+                    <code>mockPlaygroundEndpoint</code>,{" "}
+                    <code>voyagerEndpoint</code>
+                  </small>
+                </a>
+              </Link>
+              <Link href="/options/customize-templates">
+                <a className="list-group-item list-group-item-action">
+                  <h5 className="mb-1">Customize the templates for pages</h5>
+                  <small>
+                    <code>dashboardTemplate</code>,{" "}
+                    <code>playgroundTemplate</code>,{" "}
+                    <code>voyagerTemplate</code>
                   </small>
                 </a>
               </Link>

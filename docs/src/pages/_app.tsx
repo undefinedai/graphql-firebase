@@ -22,7 +22,7 @@ export default function GraphQLFirebaseDocs({
           <Nav className="mr-auto">
             <Nav.Link href="/features">Features</Nav.Link>
             <Nav.Link href="/installation">Getting Started</Nav.Link>
-            <Nav.Link href="/config">Options</Nav.Link>
+            <Nav.Link href="/options">Options</Nav.Link>
             <Nav.Link href="/hosting">Custom URL</Nav.Link>
           </Nav>
           <Nav>

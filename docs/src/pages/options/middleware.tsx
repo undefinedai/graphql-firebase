@@ -21,178 +21,184 @@ export default function OptionsMiddlewarePage() {
         <div className="row">
           <div className="col-lg-8 offset-lg-2">
             <p>
-              GraphQL servers work off two main concepts - <code>typeDefs</code>{" "}
-              and <code>resolvers</code>. Put those together, and you have a
-              <code>schema</code>. Pass your <code>schema</code> to GraphQL
-              Firebase, and you have a custom GraphQL server.
+              With GraphQL Firebase, you have middlewares galore. Let&#8217;s
+              start with the <code>globalMiddleware</code> option.
             </p>
-            <p>
-              GraphQL Firebase uses{" "}
-              <a href="https://github.com/ardatan/graphql-tools">
-                @graphql-tools
-              </a>{" "}
-              under the hood, and for convenience, re-exports a few functions so
-              you don't need to bring the package back in (unless you need more
-              from it).
-            </p>
-            <p>
-              Here&#8217;s an example of how to create a simple schema and pass
-              it to GraphQL Firebase.
-            </p>
-            <pre className="bg-light p-3">
-              <code>
-                <span className="text-muted">
-                  // We use ES6+ in our projects, but you can adjust this to use
-                  commonjs
-                </span>
-                <br />
-                <br />
-                {`import * as functions from "firebase-functions"
-
-import { GraphQLFirebase, makeExecutableSchema } from "@undefinedai/graphql-firebase"
-                
-const typeDefs = \`
-  type Post {
-    id: ID!
-    title: String
-    author: String
-    votes: Int
-  }
-
-  # the schema allows the following query:
-  type Query {
-    posts: [Post]
-  }
-
-  # this schema allows the following mutation:
-  type Mutation {
-    upvotePost (
-      postId: ID!
-    ): Post
-  }\`
-
-const resolvers = {
-  Query: {
-    posts() {
-      return posts;
-    },
-  },
-  Mutation: {
-    upvotePost(_, { postId }) {
-      const post = find(posts, { id: postId });
-      if (!post) {
-        throw new Error(\`Couldn't find post with id \${postId}\`);
-      }
-      post.votes += 1;
-      return post;
-    },
-  }
-}
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
-
-export const graphql = functions.https.onRequest(GraphQLFirebase({ schema }))`}
-              </code>
-            </pre>
-            <p>
-              In addition to <code>makeExecutableSchema</code>, we also
-              re-export <code>loadFilesSync</code>, <code>mergeResolvers</code>,
-              and <code>mergeTypeDefs</code> from{" "}
-              <a href="https://github.com/ardatan/graphql-tools">
-                @graphql-tools
-              </a>{" "}
-              so that you can easily split your typeDefs and resolvers into
-              multiple files. If you need more functionality from that package,
-              you should bring it into your project.
-            </p>
-            <h2>Adding Custom Mocks</h2>
-            <p>
-              By default, the MockQL server will try to read your typeDefs and
-              supply sensible (albeit boring) mock data values. You can
-              customize this further by passing your own mocks.
-            </p>
-            <p>
-              For example, say you don&#8217;t want each MockQL{" "}
-              <code>Post</code> to have a default mock title of "Hello World"
-              (the default mock <code>String</code>). You can bring in a mock
-              data generator (or supply a custom one) to randomize returned
-              values.
-            </p>
-            <p>Building on the above example:</p>
-            <pre className="bg-light p-3">
-              <code>
-                {`import * as functions from "firebase-functions"
-
-import { GraphQLFirebase, makeExecutableSchema } from "@undefinedai/graphql-firebase"`}
-                <br />
-                <br />
-                <span className="text-muted">
-                  // Assuming you bring in the `casual` package
-                </span>
-                <br />
-                {`import casual from "casual"`}
-                <br />
-                <br />
-                <span className="text-muted">
-                  // Same schema creation as above, and then...
-                </span>
-                <br />
-                <br />
-                {`const mocks = {
-  Query: () => ({
-    posts: () => new MockList([3, 12]),
-  }),
-  Post: () => ({
-    id: casual.uuid,
-    title: casual.title,
-    author: casual.full_name,
-    votes: casual.integer(from = 0, to = 100)
-  }),
-}
-
-export const graphql = functions.https.onRequest(GraphQLFirebase({
-  mocks,
-  schema
-}))`}
-              </code>
-            </pre>
-            <p>
-              In this example, a query to <code>posts</code> will return a list
-              of fake posts between 3 and 12 entries long, and each{" "}
-              <code>Post</code> will have a randomly generated it, title, author
-              name, and number of likes (between 0 and 100).
-            </p>
-            <p>Pretty nifty, eh?</p>
             <h2>
-              Maintaing Resolvers with <code>preserveResolvers</code>
+              Using <code>globalMiddleware</code>
             </h2>
             <p>
-              By default, the MockQL server will <em>always</em> return mock
-              data, even if you don&#8217;t supply custom mocks and even if you
-              have live, working resolves on your GraphQL server. You can change
-              this behavior with <code>preserveResolvers</code>.
+              With this option, you can add any{" "}
+              <a href="https://expressjs.com/en/guide/using-middleware.html">
+                Express middleware
+              </a>{" "}
+              to your GraphQL Firebase. Adding middleware here will apply to{" "}
+              <em>all</em> of your endpoints. This might be a good place to, for
+              example, add some analytics if you want to log every request that
+              comes no matter what the request is (graphql, mockql, playground,
+              voyager - whatever).
             </p>
             <p>
-              If you want the MockQL server to use your actual resolvers when
-              they exist, and to only mock data when a particular resolver
-              doesn&#8217;t exist, set <code>preserveResolvers: true</code>.
+              You can pass a single middleware function, or an array of
+              functions. If passing an array, your <code>globalMiddleware</code>{" "}
+              will run in order before any other middleware and before any of
+              the GraphQL Firebase responses are handled.
             </p>
             <pre className="bg-light p-3">
               <code>
                 <span className="text-muted">
-                  // Keeping the same set-up from above
+                  // We use ES6+ and typescript in our projects,
+                  <br />
+                  // but you can adjust this to use commonjs
                 </span>
                 <br />
-                {`export const graphql = functions.https.onRequest(GraphQLFirebase({
-  mocks,
-  preserveResolvers: true,
-  schema
+                <br />
+                {`import * as functions from "firebase-functions"
+
+import { GraphQLFirebase } from "@undefinedai/graphql-firebase"
+
+const loggingMiddleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.log("Time:", Date.now())
+  next()
+}
+
+export const graphql = functions.https.onRequest(GraphQLFirebase({ 
+  globalMiddleware: loggingMiddleware
 }))`}
               </code>
             </pre>
+            <h2>Using Path-Specific Middleware</h2>
+            <p>
+              For each "path" created by GraphQL Firebase, you can pass any
+              custom middleware and have it applied just to that path. With
+              everything enabled, GraphQL Firebase has the following middleware
+              options for the following paths:
+            </p>
+            <dl className="row">
+              <dt className="col-md-5 col-xl-4">
+                <code>dashboardMiddleware</code>
+              </dt>
+              <dd className="col-md-7 col-xl-8">
+                Runs just before a user accesses the dashboard page
+              </dd>
+              <dt className="col-md-5 col-xl-4">
+                <code>fourOhFourMiddleware</code>
+              </dt>
+              <dd className="col-md-7 col-xl-8">
+                Runs just before serving up the GraphQL Firebase 404 page
+              </dd>
+              <dt className="col-md-5 col-xl-4">
+                <code>graphMiddleware</code>
+              </dt>
+              <dd className="col-md-7 col-xl-8">
+                Runs just before processing any requests to the{" "}
+                <code>graphql</code> endpoint
+              </dd>
+              <dt className="col-md-5 col-xl-4">
+                <code>graphPlaygroundMiddleware</code>
+              </dt>
+              <dd className="col-md-7 col-xl-8">
+                Runs just before a user accesses the GraphQL Playground
+              </dd>
+              <dt className="col-md-5 col-xl-4">
+                <code>mockMiddleware</code>
+              </dt>
+              <dd className="col-md-7 col-xl-8">
+                Runs just before processing any requests to the{" "}
+                <code>mockql</code> endpoint
+              </dd>
+              <dt className="col-md-5 col-xl-4">
+                <code>mockPlaygroundMiddleware</code>
+              </dt>
+              <dd className="col-md-7 col-xl-8">
+                Runs just before a user accesses the MockQL Playground
+              </dd>
+              <dt className="col-md-5 col-xl-4">
+                <code>voyagerMiddleware</code>
+              </dt>
+              <dd className="col-md-7 col-xl-8">
+                Runs just before a user accesses the GraphQL Voyager
+              </dd>
+            </dl>
+            <h3 id="verify-request-headers">
+              Example: Verifying Headers For Requests
+            </h3>
+            <p>
+              Let&#8217;s say you use Firebase Authentication in your app and
+              you want to verify a user&#8217;s{" "}
+              <a href="https://firebase.google.com/docs/auth/admin/verify-id-tokens">
+                Firebase ID Token
+              </a>{" "}
+              as a way of authenticating graphql requests so that other apps
+              can&#8217;t use your api. Your app passes the <code>idToken</code>{" "}
+              as a header named <code>X-Token</code>. We&#8217;re going to apply
+              this same requirement to the graphql and mockql endpoints:
+            </p>
+            <pre className="bg-light p-3">
+              <code>
+                <span className="text-muted">
+                  // We use ES6+ and typescript in our projects,
+                  <br />
+                  // but you can adjust this to use commonjs
+                </span>
+                <br />
+                <br />
+                {`import * as functions from "firebase-functions"
+import * as admin from "firebase-admin"
+
+import { GraphQLFirebase } from "@undefinedai/graphql-firebase"
+
+const authMiddleware = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const idToken = req.get("X-Token") || "badToken"
+  try {
+    await admin.auth().verifyIdToken(idToken)
+    next()
+  } catch (error) {
+    res.json({
+      error: {
+        errors: [
+          {
+            code: 401,
+            message: "The credentials you supplied could not be verified.",
+          },
+        ],
+      },
+    })
+    res.end()
+  }
+}
+
+export const graphql = functions.https.onRequest(GraphQLFirebase({ 
+  graphMiddleware: authMiddleware,
+  mockMiddleware: authMiddleware
+}))`}
+              </code>
+            </pre>
+            <p>Notice two key things here:</p>
+            <ol>
+              <li>
+                Middleware functions can return promises and use{" "}
+                <code>
+                  async<span className="text-muted">/</span>await
+                </code>
+                .
+              </li>
+              <li>
+                We&#8217;re sending json back to be consumed by our app &ndash;
+                this is not required. You can do whatever you like in the{" "}
+                <code>catch</code> block.
+              </li>
+            </ol>
+            <p>
+              You should also note that this middleware would essentially
+              "break" your playgrounds and voyager because the playgrounds and
+              voyager need to communicate with your endpoints. We say "break" in
+              quotes because{" "}
+              <Link href="/options/headers">
+                <a>there&#8217;s a "fix" for it</a>
+              </Link>
+              .
+            </p>
             <p>
               <Link href="/options">
                 <a>&larr; Back to all options</a>

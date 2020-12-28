@@ -1,6 +1,6 @@
 {
   "name": "@undefinedai/graphql-firebase",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A graphql server that runs on Firebase Functions and Firebase Hosting. Provides a web interface with GraphQL Voyager and playgrounds, mock queries for testing, and lots of options for customizing everything to your needs.",
   "license": "MIT",
   "main": "lib/index.js",
