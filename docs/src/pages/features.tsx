@@ -80,7 +80,11 @@ export default function FeaturesPage() {
               <img
                 alt="GraphQL Playground"
                 height={462}
-                src="/graphql-playground-demo.png"
+                src={
+                  process.env.NODE_ENV === "production"
+                    ? `/graphql-firebase/graphql-playground-demo.png`
+                    : `/graphql-playground-demo.png`
+                }
                 width={730}
               />
               <figcaption className="figure-caption">
@@ -110,7 +114,11 @@ export default function FeaturesPage() {
               <img
                 alt="GraphQL Voyager"
                 height={438}
-                src="/voyager-demo.gif"
+                src={
+                  process.env.NODE_ENV === "production"
+                    ? `/graphql-firebase//voyager-demo.gif`
+                    : `/voyager-demo.gif`
+                }
                 width={730}
               />
               <figcaption className="figure-caption">
