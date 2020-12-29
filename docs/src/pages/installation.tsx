@@ -1,8 +1,17 @@
+import Head from "next/head"
 import Link from "next/link"
 
 export default function InstallationPage() {
   return (
     <>
+      <Head>
+        <title>Installing GraphQL Firebase</title>
+        <meta
+          content="How to add a GraphQL server to your Firebase Functions in 10 seconds flat."
+          key="description"
+          name="description"
+        />
+      </Head>
       <div className="jumbotron">
         <div className="container">
           <div className="row">

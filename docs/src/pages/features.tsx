@@ -1,9 +1,17 @@
-import Image from "next/image"
+import Head from "next/head"
 import Link from "next/link"
 
 export default function FeaturesPage() {
   return (
     <>
+      <Head>
+        <title>GraphQL Firebase Features</title>
+        <meta
+          content="Check out what's included out of the box when you install GraphQL Firebase."
+          key="description"
+          name="description"
+        />
+      </Head>
       <div className="jumbotron">
         <div className="container">
           <div className="row">
@@ -69,10 +77,9 @@ export default function FeaturesPage() {
               for your MockQL server.
             </p>
             <figure className="figure">
-              <Image
+              <img
                 alt="GraphQL Playground"
                 height={462}
-                quality={100}
                 src="/graphql-playground-demo.png"
                 width={730}
               />
@@ -100,10 +107,9 @@ export default function FeaturesPage() {
               relationships and structure.
             </p>
             <figure className="figure">
-              <Image
+              <img
                 alt="GraphQL Voyager"
                 height={438}
-                quality={100}
                 src="/voyager-demo.gif"
                 width={730}
               />

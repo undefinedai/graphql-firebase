@@ -1,8 +1,17 @@
+import Head from "next/head"
 import Link from "next/link"
 
 export default function OptionsPage() {
   return (
     <>
+      <Head>
+        <title>Configure GraphQL Firebase on Firebase Functions</title>
+        <meta
+          content="Navigate all the ways you can fully customize your GraphQL Firebase."
+          key="description"
+          name="description"
+        />
+      </Head>
       <div className="jumbotron">
         <div className="container">
           <div className="row">

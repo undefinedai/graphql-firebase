@@ -25,3 +25,20 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
+  docs:
+    name: Build and Publish Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+      - name: Build Node environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+          registry-url: "https://registry.npmjs.org"
+      - name: Switch to docs directory
+        run: cd docs
+      - name: Install node modules
+        run: npm ci
+      - name: Build docs for updated release and deploy to Github Pages
+        run: npm run deploy

@@ -1,8 +1,16 @@
-import Link from "next/link"
+import Head from "next/head"
 
 export default function FirebaseHostingPage() {
   return (
     <>
+      <Head>
+        <title>GraphQL Firebase on a Custom Domain with Firebase Hosting</title>
+        <meta
+          content="Add Firebase Hosting to your GraphQL Firebase function and serve your api up on your own brand."
+          key="description"
+          name="description"
+        />
+      </Head>
       <div className="jumbotron">
         <div className="container">
           <div className="row">
