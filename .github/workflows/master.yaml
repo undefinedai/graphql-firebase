@@ -15,14 +15,12 @@ jobs:
         with:
           node-version: "12.x"
           registry-url: "https://registry.npmjs.org"
-      - name: Switch to module directory
-        run: cd module
       - name: Install node modules
-        run: npm ci
+        run: npm ci --prefix module
       - name: Build module for release
-        run: npm run build
+        run: npm run build --prefix module
       - name: Publish to NPM registry
-        run: npm publish --access public
+        run: npm publish --access public --prefix module
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
   docs:
@@ -36,9 +34,7 @@ jobs:
         with:
           node-version: "12.x"
           registry-url: "https://registry.npmjs.org"
-      - name: Switch to docs directory
-        run: cd docs
       - name: Install node modules
-        run: npm ci
+        run: npm ci --prefix docs
       - name: Build docs for updated release and deploy to Github Pages
-        run: npm run deploy
+        run: npm run deploy --prefix docs
