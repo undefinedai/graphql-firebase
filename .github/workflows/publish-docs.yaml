@@ -1,0 +1,27 @@
+name: Publish Docs
+on:
+  workflow_dispatch:
+jobs:
+  docs:
+    name: Build and Publish Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+      - name: Build Node environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+          registry-url: "https://registry.npmjs.org"
+      - name: Install node modules
+        run: npm ci
+        working-directory: ./docs
+      - name: Build docs for updated release and deploy to Github Pages
+        run: npm run build
+        working-directory: ./docs
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        working-directory: ./docs
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
