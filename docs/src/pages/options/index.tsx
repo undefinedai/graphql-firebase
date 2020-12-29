@@ -34,7 +34,7 @@ export default function OptionsPage() {
               GraphQL Firebase. Below this list of options, we&#8217;ve tried to
               organize them by need and provide more detail on subsequent pages.
               GraphQL Firebase is only a few files; so, don&#8217;t be afraid to{" "}
-              <a href="https://github.com/undefinedai/graphql-firebase/tree/docs/module">
+              <a href="https://github.com/undefinedai/graphql-firebase/tree/master/module">
                 jump into the source code
               </a>{" "}
               and poke around to see how it works inside.
