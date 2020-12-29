@@ -22,15 +22,15 @@ html(lang="en")
         hr(class="my-0")
         div(class="list-group list-group-flush")
           unless disablePlaygrounds
-            a(class="list-group-item list-group-item-action" href="/#{graphPlaygroundEndpoint}")
+            a(class="list-group-item list-group-item-action" href=`/${graphPlaygroundEndpoint}`)
               h5(class="mb-1") GraphQL Playground
               p(class="mb-1") Interact with your live graphql server.
             unless disableMockQL
-              a(class="list-group-item list-group-item-action" href="/#{mockPlaygroundEndpoint}")
+              a(class="list-group-item list-group-item-action" href=`/${mockPlaygroundEndpoint}`)
                 h5(class="mb-1") MockQL Playground
                 p(class="mb-1") Interact with your graphql server in a mocked environment. Great for testing queries and results.
           unless disableVoyager
-            a(class="list-group-item list-group-item-action" href="/#{voyagerEndpoint}")
+            a(class="list-group-item list-group-item-action" href=`/${voyagerEndpoint}`)
               h5(class="mb-1") GraphQL Voyager
               p(class="mb-1") Visualize your schema and graph.
     block scripts
