@@ -1,8 +1,9 @@
 {
   "name": "graphql-firebase-monorepo",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "main": "index.js",
   "scripts": {
+    "bump": "node scripts/version-bump",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,5 +13,9 @@
     "arrowParens": "always",
     "semi": false,
     "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "chalk": "^4.1.0",
+    "semver": "^7.3.4"
   }
 }

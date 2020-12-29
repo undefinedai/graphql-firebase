@@ -7,12 +7,17 @@ export default function HomePage() {
         <div className="container">
           <div className="row">
             <div className="col-lg-8 offset-lg-2">
-              <h1 className="display-4">GraphQL Firebase</h1>
+              <h1 className="display-4">GraphQL Firebase </h1>
               <p className="lead">
                 The easiest, fastest, and most flexible way to add a GraphQL
                 server to your Firebase Functions. Complete with mocking,
                 playgrounds, GraphQL Voyager, and Firebase Hosting integration
                 for a custom url.
+              </p>
+              <p>
+                <span className="badge badge-secondary">
+                  version {process.env.version}
+                </span>
               </p>
             </div>
           </div>

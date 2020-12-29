@@ -72,6 +72,7 @@ gtag('config', 'G-0DE5Y7ZMEZ');
             </Nav.Link>
           </Nav>
           <Nav>
+            <span className="navbar-text">v{process.env.version}</span>
             <Nav.Link href="https://github.com/undefinedai/graphql-firebase">
               <ImGithub />
             </Nav.Link>
