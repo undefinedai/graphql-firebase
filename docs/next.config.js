@@ -1,3 +1,7 @@
+const fs = require("fs")
+
+const { version } = JSON.parse(fs.readFileSync("package.json"))
+
 const isProduction = process.env.NODE_ENV === "production"
 
 module.exports = {
@@ -14,5 +18,6 @@ module.exports = {
       timeZoneName: "short",
       year: "numeric",
     }).format(new Date()),
+    version,
   },
 }
