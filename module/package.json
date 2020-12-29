@@ -8,6 +8,7 @@
   "files": [
     "lib/**/*"
   ],
+  "homepage": "https://undefinedai.github.io/graphql-firebase",
   "repository": {
     "type": "git",
     "url": "https://github.com/undefinedai/graphql-firebase"
