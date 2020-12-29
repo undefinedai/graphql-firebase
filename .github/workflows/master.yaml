@@ -16,11 +16,14 @@ jobs:
           node-version: "12.x"
           registry-url: "https://registry.npmjs.org"
       - name: Install node modules
-        run: npm ci --prefix module
+        run: npm ci
+        working-directory: ./module
       - name: Build module for release
-        run: npm run build --prefix module
+        run: npm run build
+        working-directory: ./module
       - name: Publish to NPM registry
-        run: npm publish --access public --prefix module
+        run: npm publish --access public
+        working-directory: ./module
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
   docs:
@@ -35,6 +38,10 @@ jobs:
           node-version: "12.x"
           registry-url: "https://registry.npmjs.org"
       - name: Install node modules
-        run: npm ci --prefix docs
+        run: npm ci
+        working-directory: ./docs
       - name: Build docs for updated release and deploy to Github Pages
-        run: npm run deploy --prefix docs
+        run: npm run deploy
+        working-directory: ./docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
