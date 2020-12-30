@@ -112,6 +112,8 @@ export function GraphQLFirebase({
 }: GraphQLFirebaseConfig = {}): Express {
   const app = express()
   app.set("view engine", "pug")
+  app.set("views", join(__dirname, "views"))
+  app.locals.basedir = __dirname
 
   app.use(cors({ origin: true }))
 

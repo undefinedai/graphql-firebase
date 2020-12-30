@@ -87,16 +87,30 @@ export default function OptionsCustomizeTemplatesPage() {
             </p>
             <pre className="bg-light p-3">
               <code>
-                {`extends node_modules/@undefinedai/graphql-firebase/lib/views/dashboard.pug
+                {`extends /views/dashboard.pug
 
 block append head
   meta(name="twitter:title" content="Private GraphQL Dashboard")`}
               </code>
             </pre>
             <p>
-              The rest of the template will remain &ndash; but your meta tag
-              will be <em>appended</em>.
+              Then, pass the path of your <code>my-dashboard.png</code> to{" "}
+              <code>dashboardTemplate</code> and the rest of the template will
+              remain &ndash; but your meta tag will be <em>appended</em>.
             </p>
+            <div className="alert alert-warning">
+              <p>
+                Notice that we&#8217;re using an absolute path in{" "}
+                <code>extends</code>. The templates you can extend are:
+              </p>
+              <ul>
+                <li>/views/dashboard.pug</li>
+                <li>/views/playground.pug</li>
+                <li>/views/voyager.pug</li>
+              </ul>
+              You must use these absolute paths to extend a template, or supply
+              your own to fully replace any of them.
+            </div>
             <h2>Overriding Templates</h2>
             <p>
               If appending/prepending to the templates isn&#8217;t flexible
@@ -106,7 +120,7 @@ block append head
             </p>
             <pre className="bg-light p-3">
               <code>
-                {`extends node_modules/@undefinedai/graphql-firebase/lib/views/dashboard.pug
+                {`extends /views/dashboard.pug
 
 block head
   meta(name="twitter:title" content="Private GraphQL Dashboard")`}
